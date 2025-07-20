@@ -22,22 +22,20 @@ const ToDoList = () => {
     <>
       <h1>Lista de tareas</h1>
 
-      <input
-        type="text"
-        value={inputValue}
-        onChange={(e) => setInputValue(e.target.value)}
-        onKeyDown={handleKeyDown}
-        placeholder="Escribe una tarea"
-      />{task.length}
 
      <div className='d-flex flex-column justify-content-center align-items-center bg-secondary'>
         <div className="card" style={{width: '18rem'}}>
                 <div className="card-header">
                     <ul className="list-group list-group-flush">
+
+                    <input type="text" value={inputValue} onChange={(e) => setInputValue(e.target.value)}  onKeyDown={handleKeyDown} 
+                    placeholder="Escribe una tarea" style={{border:'none', outline:'none'}}/>
                         {task.map((elemento, index) => (
-                        <li key={index} className="list-group-item" >{elemento}</li>
+                          <li key={index} className="list-group-item" >{elemento}
+                          </li>
                     ))}
                     </ul>
+                    <p className="d-flex mb-0 text-body-secondary" style={{fontSize:'10px'}}>Tareas pendientes {task.length}</p>
                 </div>
         </div>
       </div>
