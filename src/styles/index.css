@@ -1,11 +1,35 @@
-/* 
+body{
+    background-color: rgb(233, 226, 226);
+    
+}
 
-    You can write your own styles here...
-    
-    
-    ...Or you can use the import command to include 
-    other sylesheets into your bunde as well, e.j:
-    
-    import 'relative/path/to/stylesheet.scss';
+.delete{
 
-*/
+  display:none;
+  font-weight: normal;
+  user-select: none; /* evita que selecciones la X al hacer clic */
+}
+
+.list-group-item:hover .delete {
+  display: inline;
+  color: rgb(233, 226, 226);
+  font-weight:normal;
+  font-size: 15px;
+}
+
+.footer {
+    font-size: 10px;
+    color:gray;
+    z-index:auto;
+}
+
+.fondo-inferior {
+  height: 10px;
+  background: #dcdcdc;
+}
+
+.fondo-inferior2 {
+  height: 10px;
+  border: #f1d4d4;
+  border-top: rgb(18, 173, 18);
+}
