@@ -5,7 +5,7 @@ const ToDoList = () => {
   const [task, setTask] = useState([]);
   const [inputValue, setInputValue] = useState('');
 
-  function handleKeyDown(event) {
+  function detectKey(event) {
     if (event.key === 'Enter' || event.key === 'Tab') {
 
       if (inputValue.trim() !== '') {
@@ -14,7 +14,7 @@ const ToDoList = () => {
             else{
                 setTask([...task,inputValue.trim()])
             }
-            setInputValue('');//limpia el valor
+            setInputValue('');
       }
     }
   }
@@ -26,14 +26,11 @@ const ToDoList = () => {
   return (
     <>
     <h1 className='d-flex flex-column justify-content-center align-items-center fw-light' style={{color:'gray'}}>Todos</h1>
-
-
       <div className='d-flex flex-column justify-content-center align-items-center'>
           <div className="card" style={{width: '40rem'}}>
-                  <div className="card-header">
+                  <div className="card-header bg-white">
                       <ul className="list-group list-group-flush">
-
-                        <input type="text" value={inputValue} onChange={(e) => setInputValue(e.target.value)}  onKeyDown={handleKeyDown} 
+                        <input type="text" value={inputValue} onChange={(e) => setInputValue(e.target.value)}  onKeyDown={detectKey} 
                         placeholder="Escribe una tarea" style={{border:'none', outline:'none'}}/>
                             {task.map((elemento, index) => (
                               <li key={index} className="list-group-item text-secondary d-flex justify-content-between align-items-center">{elemento}
@@ -41,10 +38,16 @@ const ToDoList = () => {
                               </li>
                         ))}
                       </ul>
-                      <footer className="footer">tareas pendientes {task.length}</footer>
+
                   </div>
-                  <div className="fondo-inferior"></div>
-                  <div className="fondo-inferior2"></div>
+                      <footer className="footer-container">
+                        <div className="footer">
+                                  {task.length} tareas pendientes
+                        </div>
+                        <div className="sombra"></div>
+                        <div className="sombra"></div>
+                      </footer>
+
           </div>
         </div>
     </>
