@@ -18,7 +18,7 @@ const ToDoList = () => {
       }
     }
   }
-
+ 
   const deleteTask = (index) => {
   setTask(task.filter((_, i) => i !== index));  
   };
