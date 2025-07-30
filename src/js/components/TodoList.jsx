@@ -13,11 +13,7 @@ const ToDoList = () => {
   const getTasks = () => {
       fetch('https://playground.4geeks.com/todo/users/Anthonyg')
       .then(response => response.json())
-      .then(data => {
-      const labels = data.todos.map(item => item.label);
-        setTask(labels);
-     })
-        .catch(error => console.error('Error al obtener tareas:', error));
+      .then(data => setTask(data.todos));
   };
 
 
@@ -39,12 +35,12 @@ const ToDoList = () => {
 
   function detectKey(event) {
     if (event.key === 'Enter' || event.key === 'Tab') {
-
       if (inputValue.trim() !== '') {
+        const nuevaTarea = { label: inputValue.trim(), is_done: false }
             if(task.length == 0){
-                setTask([ inputValue.trim(),...task]);}
+                setTask([nuevaTarea,...task]);}
             else{
-                setTask([...task,inputValue.trim()])
+                setTask([...task, nuevaTarea])
             }
             AddTasks(inputValue.trim()); //insercion en el api
             setInputValue('');
@@ -53,22 +49,22 @@ const ToDoList = () => {
   }
 
   function borrarTarea(id){
-    console.log(id);
+
     const requestOptions = {
       method: "DELETE",
       redirect: "follow"
     };
 
-      fetch("https://playground.4geeks.com/todo/todos/" + id, requestOptions)
+      fetch("https://playground.4geeks.com/todo/todos/"+id, requestOptions)
       .then((response) => response.text())
       .then((result) => console.log(result))
       .catch((error) => console.error(error));
       getTasks();
   }
   
-    useEffect(() => {
+   /* useEffect(() => {
       borrarTarea()
-     }, []);
+     }, []);*/
 
  /* const deleteTask = (index) => {
   setTask(task.filter((_, i) => i !== index));  
@@ -84,8 +80,8 @@ const ToDoList = () => {
                         <input type="text" value={inputValue} onChange={(e) => setInputValue(e.target.value)}  onKeyDown={detectKey} 
                         placeholder="Escribe una tarea" style={{border:'none', outline:'none'}}/>
                             {task.map((elemento, index) => (
-                              <li key={index} className="list-group-item text-secondary d-flex justify-content-between align-items-center">{elemento}
-                                <span className='delete' onClick={()=>borrarTarea(index)}  >X</span>
+                              <li key={index} className="list-group-item text-secondary d-flex justify-content-between align-items-center">{elemento.label} {elemento.id}
+                                <span className='delete' onClick={()=>borrarTarea(elemento.id)}  >X</span>
                               </li>
                         ))}
                       </ul>
