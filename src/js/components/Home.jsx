@@ -8,7 +8,7 @@ import Test from "./nvoTodoList";
 //create your first component
 const Home = () => {
  return(
-	<Test  />
+	<ToDoList  />
  )
 };
 

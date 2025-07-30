@@ -1,9 +1,40 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import '/src/styles/index.css';
 
 const ToDoList = () => {
   const [task, setTask] = useState([]);
   const [inputValue, setInputValue] = useState('');
+
+  useEffect(() => {
+    getTasks();
+    }, []);
+
+  const getTasks = () => {
+      fetch('https://playground.4geeks.com/todo/users/Anthonyg')
+      .then(response => response.json())
+      .then(data => {
+      const labels = data.todos.map(item => item.label);
+        setTask(labels);
+     })
+        .catch(err => console.error('Error al obtener tareas:', err));
+  };
+
+
+    function AddTasks(label){
+        const requestOptions = {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ 
+            "label": label,
+            "is_done": false
+            } )
+        };
+        fetch('https://playground.4geeks.com/todo/todos/Anthonyg', requestOptions)
+        .then((response) => response.json())
+        .then((data)=> console.log(data))
+    }
+
+
 
   function detectKey(event) {
     if (event.key === 'Enter' || event.key === 'Tab') {
@@ -14,6 +45,7 @@ const ToDoList = () => {
             else{
                 setTask([...task,inputValue.trim()])
             }
+            AddTasks(inputValue.trim()); //insercion en el api
             setInputValue('');
       }
     }
