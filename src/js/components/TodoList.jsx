@@ -26,27 +26,25 @@ const ToDoList = () => {
             "is_done": false
             } )
         };
-        fetch('https://playground.4geeks.com/todo/todos/Anthonyg', requestOptions)
-        .then((response) => response.json())
-        .then((data)=> console.log(data))
-    }
+fetch('https://playground.4geeks.com/todo/todos/Anthonyg', requestOptions)
+    .then((response) => response.json())
+    .then((data) => {
+      // Aquí agregas la tarea con su ID correcto
+      setTask(prevTasks => [...prevTasks, data]);
+    })
+    .catch(error => console.error("Error al agregar tarea:", error));
+}
 
 
 
-  function detectKey(event) {
-    if (event.key === 'Enter' || event.key === 'Tab') {
-      if (inputValue.trim() !== '') {
-        const nuevaTarea = { label: inputValue.trim(), is_done: false }
-            if(task.length == 0){
-                setTask([nuevaTarea,...task]);}
-            else{
-                setTask([...task, nuevaTarea])
-            }
-            AddTasks(inputValue.trim()); //insercion en el api
-            setInputValue('');
-      }
+function detectKey(event) {
+  if (event.key === 'Enter' || event.key === 'Tab') {
+    if (inputValue.trim() !== '') {
+      AddTasks(inputValue.trim()); // Solo insertar desde el API
+      setInputValue('');
     }
   }
+}
 
   function borrarTarea(id){
 
@@ -57,18 +55,12 @@ const ToDoList = () => {
 
       fetch("https://playground.4geeks.com/todo/todos/"+id, requestOptions)
       .then((response) => response.text())
-      .then((result) => console.log(result))
+      .then((result) => getTasks())
       .catch((error) => console.error(error));
-      getTasks();
+      //getTasks();
   }
   
-   /* useEffect(() => {
-      borrarTarea()
-     }, []);*/
-
- /* const deleteTask = (index) => {
-  setTask(task.filter((_, i) => i !== index));  
-  };*/
+ 
 
   return (
     <>
