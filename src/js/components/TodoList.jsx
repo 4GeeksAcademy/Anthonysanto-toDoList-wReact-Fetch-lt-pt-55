@@ -5,10 +5,11 @@ const ToDoList = () => {
   const [task, setTask] = useState([]);
   const [inputValue, setInputValue] = useState('');
 
-  useEffect(() => {
+ useEffect(() => {
     getTasks();
     }, []);
 
+  
   const getTasks = () => {
       fetch('https://playground.4geeks.com/todo/users/Anthonyg')
       .then(response => response.json())
@@ -16,7 +17,7 @@ const ToDoList = () => {
       const labels = data.todos.map(item => item.label);
         setTask(labels);
      })
-        .catch(err => console.error('Error al obtener tareas:', err));
+        .catch(error => console.error('Error al obtener tareas:', error));
   };
 
 
@@ -50,10 +51,28 @@ const ToDoList = () => {
       }
     }
   }
- 
-  const deleteTask = (index) => {
+
+  function borrarTarea(id){
+    console.log(id);
+    const requestOptions = {
+      method: "DELETE",
+      redirect: "follow"
+    };
+
+      fetch("https://playground.4geeks.com/todo/todos/" + id, requestOptions)
+      .then((response) => response.text())
+      .then((result) => console.log(result))
+      .catch((error) => console.error(error));
+      getTasks();
+  }
+  
+    useEffect(() => {
+      borrarTarea()
+     }, []);
+
+ /* const deleteTask = (index) => {
   setTask(task.filter((_, i) => i !== index));  
-  };
+  };*/
 
   return (
     <>
@@ -66,7 +85,7 @@ const ToDoList = () => {
                         placeholder="Escribe una tarea" style={{border:'none', outline:'none'}}/>
                             {task.map((elemento, index) => (
                               <li key={index} className="list-group-item text-secondary d-flex justify-content-between align-items-center">{elemento}
-                                <span className='delete' onClick={()=>deleteTask(index)}  >X</span>
+                                <span className='delete' onClick={()=>borrarTarea(index)}  >X</span>
                               </li>
                         ))}
                       </ul>
