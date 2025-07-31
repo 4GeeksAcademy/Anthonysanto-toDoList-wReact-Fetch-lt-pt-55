@@ -3,7 +3,6 @@ import React from "react";
 //include images into your bundle
 import rigoImage from "../../img/rigo-baby.jpg";
 import ToDoList from "./TodoList";
-import Test from "./nvoTodoList";
 
 //create your first component
 const Home = () => {

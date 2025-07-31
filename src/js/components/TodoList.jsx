@@ -26,28 +26,25 @@ const ToDoList = () => {
             "is_done": false
             } )
         };
-fetch('https://playground.4geeks.com/todo/todos/Anthonyg', requestOptions)
-    .then((response) => response.json())
-    .then((data) => {
-      // Aquí agregas la tarea con su ID correcto
-      setTask(prevTasks => [...prevTasks, data]);
-    })
-    .catch(error => console.error("Error al agregar tarea:", error));
-}
+      fetch('https://playground.4geeks.com/todo/todos/Anthonyg', requestOptions)
+          .then((response) => response.json())
+          .then((data) => {
+            setTask(prevTasks => [...prevTasks, data]);
+          })
 
+}
 
 
 function detectKey(event) {
   if (event.key === 'Enter' || event.key === 'Tab') {
     if (inputValue.trim() !== '') {
-      AddTasks(inputValue.trim()); // Solo insertar desde el API
+      AddTasks(inputValue.trim());
       setInputValue('');
     }
   }
 }
 
   function borrarTarea(id){
-
     const requestOptions = {
       method: "DELETE",
       redirect: "follow"
@@ -64,7 +61,7 @@ function detectKey(event) {
 
   return (
     <>
-    <h1 className='d-flex flex-column justify-content-center align-items-center fw-light' style={{color:'gray'}}>Todos</h1>
+    <h1 className='d-flex flex-column justify-content-center align-items-center fw-light' style={{color:'gray'}}>List to do</h1>
       <div className='d-flex flex-column justify-content-center align-items-center'>
           <div className="card" style={{width: '40rem'}}>
                   <div className="card-header bg-white">
@@ -72,7 +69,7 @@ function detectKey(event) {
                         <input type="text" value={inputValue} onChange={(e) => setInputValue(e.target.value)}  onKeyDown={detectKey} 
                         placeholder="Escribe una tarea" style={{border:'none', outline:'none'}}/>
                             {task.map((elemento, index) => (
-                              <li key={index} className="list-group-item text-secondary d-flex justify-content-between align-items-center">{elemento.label} {elemento.id}
+                              <li key={index} className="list-group-item text-secondary d-flex justify-content-between align-items-center">{elemento.label}
                                 <span className='delete' onClick={()=>borrarTarea(elemento.id)}  >X</span>
                               </li>
                         ))}
@@ -81,7 +78,7 @@ function detectKey(event) {
                   </div>
                       <footer className="footer-container">
                         <div className="footer">
-                                  {task.length} tareas pendientes
+                                  {task.length} item left
                         </div>
                         <div className="sombra"></div>
                         <div className="sombra"></div>
